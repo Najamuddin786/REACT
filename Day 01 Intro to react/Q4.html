@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JSX and Babel</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      // Your JSX code here
+      function App(){
+        
+        return <>
+                <div>
+                    <img src='data:image/jpeg;base64,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'/>
+                    <h1>SUBSCRIBE</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia, consectetur.</p>
+                    <input placeholder='john@doe.net'/>
+                    <button style={{background:"green"}}>Subscribe</button>
+                </div> 
+        </>
+                   
+      }
+
+      let root=ReactDOM.createRoot(document.getElementById('root'))
+      root.render(<App/>)
+    </script>
+  </body>
+</html>
