@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JSX and Babel</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      function App() {
+        async function handleGetData() {
+          try {
+            const response = await fetch(
+              'https://www.flipkart.com/redmi-13c-stardust-black-128-gb/p/itm9b22752239e4d?pid=MOBGW4HKVU4ZGZFZ&lid=LSTMOBGW4HKVU4ZGZFZCHB6WV&marketplace=FLIPKART'
+            );
+            
+            const html = await response.text();
+
+            // Convert the HTML string into a DOM element
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            // Extract product details using query selectors
+            const productName = doc.querySelector('span.B_NuCI')?.textContent;
+            const price = doc.querySelector('div._30jeq3._16Jk6d')?.textContent;
+            const ratings = doc.querySelector('span._2_R_DZ')?.textContent;
+
+            console.log(`Product Name: ${productName}`);
+            console.log(`Price: ${price}`);
+            console.log(`Ratings: ${ratings}`);
+          } catch (error) {
+            console.log('Error fetching the product details:', error);
+          }
+        }
+
+        return (
+          <>
+            <p>React is a JavaScript library</p>
+            <div style={{ background: 'green' }} className="main">
+              <p>Click the button to fetch product details from Flipkart</p>
+              <button onClick={handleGetData}>Get Product From Flipkart</button>
+            </div>
+          </>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
