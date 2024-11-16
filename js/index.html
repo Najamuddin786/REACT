@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        *{margin: 0px;box-sizing: border-box;padding: 0px;}
+        #flex{
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            align-items: center;
+        }
+        #container{
+            background: #000;
+            width: 98vw;
+            max-width:380px;
+            height: 90vh;
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px 1px blue;
+            
+        }
+        #screen{
+            width: 98%;
+            height: 18%;
+            background: #ffcbcb;
+            margin: 1%;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 30px;
+        }
+        #num{
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            height: 80%;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+
+        }
+        #num>div{
+            width: 23%;
+            height: 23%;
+            background: #ffcbcb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #num>div:hover{
+                background: #ffffff;
+                box-shadow: 1px 1px 10px 1px blue;
+                
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="flex">
+    <div id="container">
+        <div id="screen">
+
+        </div>
+        <div id="num">
+            <div onclick="set(1)">1</div>
+            <div onclick="set(2)">2</div>
+            <div onclick="set(3)">3</div>
+            <div onclick="set('+')">+</div>
+            <div onclick="set(4)">4</div>
+            <div onclick="set(5)">5</div>
+            <div onclick="set(6)">6</div>
+            <div onclick="set('-')">-</div>
+            <div onclick="set(7)">7</div>
+            <div onclick="set(8)">8</div>
+            <div onclick="set(9)">9</div>
+            <div onclick="set('*')">*</div>
+            <div onclick="set(0)">0</div>
+            <div onclick="set('/')">/</div>
+            <div style="font-size: 30px;" onclick="clearS()">Clear</div>
+            <div onclick="cal()">=</div>
+
+        </div>
+
+    </div>
+    </div>
+    
+</body>
+<script>
+    let value=[]
+    
+    let screen=document.getElementById('screen')
+    function set(v) {
+            if (typeof v === 'number' || "+-*/%".includes(v)) {
+                if ("+-*/%".includes(v) && "+-*/%".includes(value[value.length - 1])) {
+                    // Replace last operator with new one
+                    value[value.length - 1] = v;
+                } else {
+                    value.push(v);
+                }
+                screen.innerHTML = value.join('');
+            }
+        }
+        function cal() {
+           
+            try {
+                const result = eval(value.join(''));
+                if(!result){
+                    screen.innerHTML = '';
+                }else{
+                    screen.innerHTML = result;
+                value = [result]; // Reset value with result for further calculations
+            
+
+                }
+              } catch (error) {
+                
+                screen.innerHTML = 'Error';
+                value = [];
+            }
+        }
+        function clearS(){
+            value=[]
+            screen.innerHTML=''
+        }
+
+</script>
+</html>
