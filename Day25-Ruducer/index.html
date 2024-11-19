@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+
+
+      const initialState = {
+          email: '',
+          password: ''
+      };
+
+    
+      function reducer(state, action) {
+          switch (action.type) {
+              case 'update_email':
+                  return { ...state, email: action.payload };
+              case 'update_password':
+                  return { ...state, password: action.payload };
+              case 'reset':
+                  return initialState;
+              default:
+                  throw new Error('Unknown action type');
+          }
+      }
+
+function App() {
+    const [state, dispatch] = React.useReducer(reducer, initialState);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form Data:', state);
+        alert(`Email: ${state.email}\nPassword: ${state.password}`);
+    };
+
+    return (
+        <div style={{ width: '300px', margin: '50px auto', textAlign: 'center' }}>
+            <form onSubmit={handleSubmit}>
+                <div style={{ marginBottom: '15px' }}>
+                    <label htmlFor="email">Email:</label><br />
+                    <input
+                        type="email"
+                        id="email"
+                        value={state.email}
+                        onChange={(e) =>
+                            dispatch({ type: 'update_email', payload: e.target.value })
+                        }
+                        placeholder="Enter your email"
+                        required
+                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                    />
+                </div>
+                <div style={{ marginBottom: '15px' }}>
+                    <label htmlFor="password">Password:</label><br />
+                    <input
+                        type="password"
+                        id="password"
+                        value={state.password}
+                        onChange={(e) =>
+                            dispatch({ type: 'update_password', payload: e.target.value })
+                        }
+                        placeholder="Enter your password"
+                        required
+                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                    />
+                </div>
+                <button type="submit" style={{ padding: '10px 20px', cursor: 'pointer' }}>
+                    Submit
+                </button>
+                <button
+                    type="button"
+                    onClick={() => dispatch({ type: 'reset' })}
+                    style={{
+                        padding: '10px 20px',
+                        marginLeft: '10px',
+                        cursor: 'pointer',
+                        background: 'lightgray',
+                        border: 'none',
+                    }}
+                >
+                    Reset
+                </button>
+            </form>
+        </div>
+    );
+}
+
+
+
+    let root=ReactDOM.createRoot(document.getElementById('root'))
+    root.render(<App/>)
+  </script>
+</html>
